@@ -6,3 +6,5 @@ Porem a todos da comunidade em portugues / brasileira coloquem o nome
 da Zentry Academy e Links para o github da zentry academy em qualquer
 projeto que use conteudos exclusivo essa base seja completa ou parcial !
  
+
+Tudo isso de acordo com GNU General Public License v3.0!

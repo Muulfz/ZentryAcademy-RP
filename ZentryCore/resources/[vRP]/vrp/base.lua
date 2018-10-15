@@ -1,3 +1,6 @@
+--- Vrp totalmente reformulado um oferecimento -> Zentry Academy (By Muulfz#2218 e com colaboração de Marmota#2533)
+--- todas as modicações feitas nos arquivos nativos da vRP terão um comentario escrito "rmk".
+
 local Proxy = module("lib/Proxy")
 local Tunnel = module("lib/Tunnel")
 local Luang = module("lib/Luang")
@@ -24,6 +27,8 @@ vRP.rusers = {} -- store the opposite of users
 vRP.user_tables = {} -- user data tables (logger storage, saved to database)
 vRP.user_tmp_tables = {} -- user tmp data tables (logger storage, not saved)
 vRP.user_sources = {} -- user sources 
+vRP.user_daily_tables = {} -- user data daily tables (will reset after server run for 24h) ---rmk
+vRP.user_tmp_daily_tables = {} -- user data daily tables tmp (not saved on db) ---rmk
 
 -- db/SQL API
 local db_drivers = {}

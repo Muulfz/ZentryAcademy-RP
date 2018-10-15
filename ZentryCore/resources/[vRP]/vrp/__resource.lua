@@ -34,7 +34,10 @@ server_scripts{
   "modules/basic_items.lua",
   "modules/basic_skinshop.lua",
   "modules/cloakroom.lua",
-  "modules/basic_radio.lua"
+  "modules/basic_radio.lua",
+
+  -- Resources Loader
+  "modules/General/loader.lua"
 }
 
 -- client scripts
