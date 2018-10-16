@@ -4,7 +4,7 @@ description "RP module/framework"
 ui_page "gui/index.html"
 
 -- server scripts
-server_scripts{ 
+server_scripts{
   "lib/utils.lua",
   "base.lua",
   "modules/gui.lua",
@@ -37,7 +37,11 @@ server_scripts{
   "modules/basic_radio.lua",
 
   -- Resources Loader
-  "modules/General/loader.lua"
+  "modules/General/loader.lua",
+
+  -- THREAD Manager
+  "modules/General/thread_manager.lua",
+
 }
 
 -- client scripts

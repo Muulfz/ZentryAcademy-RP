@@ -9,4 +9,83 @@ local config = module("cfg/general/utils/currency")
 vRP.currency = {} -- free Api
 vRP.currencySpecial = {} -- fix api config
 
+function vRP.currencyUpdater()
+    local currencyTime = vRP.getSCurrencyTime("vRP:currency")
+    if currencyTime then
+        if os.time() >= currencyTime + config.currencyReset*60 then
+            vRP.updateCurrency()
+            vRP.updateCurrencyEspecials()
+            for i = 1, #vRP.currency do
+                vRP.currency[i]:removeSelf()
+                vRP.currency[i] = nil
+            end
+            for i = 1, #vRP.currencySpecial do
+                vRP.currencySpecial[i]:removeSelf()
+                vRP.currencySpecial[i] = nil
+            end
+            vRP.getCurrency()
+        end
+    else
+        vRP.updateCurrency()
+        vRP.updateCurrencyEspecials()
+    end
+end
 
+function vRP.getCurrency()
+    vRP.getCurrencyEspecialTable()
+    vRP.getCurrencyTable()
+end
+
+function vRP.updateCurrency()
+    local url = "http://www.floatrates.com/daily/BRL.json"
+    local method = "GET"
+    PerformHttpRequest(url, function(code, result, headers)
+        vRP.setSCurrency("vRP:currency", result)
+        cb(0, nil)
+    end, method)
+end
+
+function vRP.updateCurrencyEspecials()
+    local url = "data.fixer.io/api/latest?access_key=" .. config.fixerApikey
+    if not config.currency_especial then
+       url = "https://raw.githubusercontent.com/ZentryAcademy/ZentryAcademy-RP/master/ZentryCore/resources/%5BvRP%5D/vrp/cfg/general/utils/Static_Files/Currency_Static.json"
+    end
+    local method = "GET"
+    PerformHttpRequest(url, function(code, result, headers)
+        vRP.setSCurrency("vRP:currencyspecial", result)
+        cb(0, nil)
+    end, method)
+end
+
+function vRP.setSCurrency(key, value)
+    local time = os.time()
+    vRP.execute("vRP/set_srvcurrency",{key = key, value = value, last_time_update = time})
+end
+
+function vRP.getSCurrency(key, cbr)
+    local rows = vRP.query("vRP/get_srvcurrency",{key = key})
+    if #rows > 0 then
+        return rows[1].dvalue
+    else
+        return ""
+    end
+end
+
+function vRP.getSCurrencyTime(key, cbr)
+    local rows = vRP.query("vRP/get_srvcurrency_time",{key = key})
+    if #rows > 0 then
+        return rows[1].last_time_update
+    else
+        return false
+    end
+end
+
+function vRP.getCurrencyTable()
+    local data = vRP.getSCurrency("vRP:currency")
+    vRP.currency = json.decode(data) or {}
+end
+
+function vRP.getCurrencyEspecialTable()
+    local data = vRP.getSCurrency("vRP:currencyspecial")
+    vRP.currencySpecial = json.decode(data) or {}
+end

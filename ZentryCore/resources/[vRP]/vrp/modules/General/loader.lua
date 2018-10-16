@@ -7,3 +7,20 @@
 
 --This file will load all resouces
 local utils = module("modules/General/utils")
+local currencyManager = module("modules/General/currency_system/Manager")
+
+
+
+
+
+
+if utils then
+    if Debug.active then
+        Debug.log("Currency utils is loaders")
+    end
+end
+if currencyManager then
+    if Debug.active then
+        Debug.log("Currency Manager is loaders")
+    end
+end
